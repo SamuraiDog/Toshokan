@@ -1,6 +1,8 @@
 package com.dog.samurai.toshokan
 
 import android.app.Application
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -15,3 +17,7 @@ class AppModule(val app: Application) {
     @Singleton
     fun provideRepositoryProvider(): RepositoryProvider = RepositoryProvider(app)
 }
+
+
+@GlideModule
+class MyAppGlideModule : AppGlideModule()

@@ -1,10 +1,8 @@
-package com.dog.samurai.toshokan
+package com.dog.samurai.toshokan.view
 
-import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.util.Log
+import com.dog.samurai.toshokan.R
 
 class MainActivity : AppCompatActivity() {
 

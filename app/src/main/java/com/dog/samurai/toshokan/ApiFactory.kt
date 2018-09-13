@@ -1,6 +1,5 @@
 package com.dog.samurai.toshokan
 
-import android.content.Context
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 interface ApiFactory {
     companion object {
-        inline fun <reified T> createRetrofit(context: Context, baseUrl: String, header: String?): T {
+        inline fun <reified T> createRetrofit(baseUrl: String, header: String?): T {
             val builder = OkHttpClient().newBuilder()
             builder.connectTimeout(30, TimeUnit.SECONDS)
             builder.readTimeout(30, TimeUnit.SECONDS)

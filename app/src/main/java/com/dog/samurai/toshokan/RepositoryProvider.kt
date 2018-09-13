@@ -1,26 +1,28 @@
 package com.dog.samurai.toshokan
 
 import android.content.Context
+import com.dog.samurai.toshokan.repository.*
 import javax.inject.Inject
 
 
 class RepositoryProvider @Inject constructor(val context: Context) {
-    private var toshoRepository: ToshoRepository? = null
-    private var prefRepository: PrefRepository? = null
+    private var resasRepository: ResasRepository? = null
+    private var flickrRepository: FlickrRepository? = null
 
-    fun toshoRepository(): ToshoRepository {
-        if (toshoRepository == null) {
-            val service = ApiFactory.createRetrofit<ToshoApiService>(context, "http://api.calil.jp/", null)
-            toshoRepository = ToshoRepository(service)
+    fun resasRepository(): ResasRepository {
+        if (resasRepository == null) {
+            val service = ApiFactory.createRetrofit<ResasApiService>("https://opendata.resas-portal.go.jp/api/v1/", "TEST")
+            resasRepository = ResasRepository(service)
         }
-        return toshoRepository as ToshoRepository
+        return resasRepository as ResasRepository
     }
 
-    fun prefRepository(): PrefRepository {
-        if (prefRepository == null) {
-            val service = ApiFactory.createRetrofit<PrefApiService>(context, "https://opendata.resas-portal.go.jp/api/v1/", "")
-            prefRepository = PrefRepository(service)
+    fun flickrRepository(): FlickrRepository {
+        if (flickrRepository == null) {
+            val service = ApiFactory.createRetrofit<FlickrApiService>("https://api.flickr.com/services/", null)
+            flickrRepository = FlickrRepository(service)
         }
-        return prefRepository as PrefRepository
+        return flickrRepository as FlickrRepository
     }
+
 }
