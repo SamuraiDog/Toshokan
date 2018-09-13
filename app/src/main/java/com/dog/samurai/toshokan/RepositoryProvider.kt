@@ -19,7 +19,7 @@ class RepositoryProvider @Inject constructor(val context: Context) {
 
     fun flickrRepository(): FlickrRepository {
         if (flickrRepository == null) {
-            val service = ApiFactory.createRetrofit<FlickrApiService>("https://api.flickr.com/services/", null)
+            val service = ApiFactory.createRetrofit<FlickrApiService>( "https://api.flickr.com/services/", null)
             flickrRepository = FlickrRepository(service)
         }
         return flickrRepository as FlickrRepository

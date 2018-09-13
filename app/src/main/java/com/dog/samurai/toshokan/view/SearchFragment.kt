@@ -33,6 +33,9 @@ class SearchFragment : Fragment() {
 
     private lateinit var visitorAdapter: VisitorAdapter
     private lateinit var prefItems: List<String>
+    private lateinit var selectedPrefectures: Prefectures
+    private lateinit var yearList: List<String>
+    private var selectedYear: String = "2012"
     private lateinit var resasViewModel: ResasViewModel
     private lateinit var flickrViewModel: FlickrViewModel
     private lateinit var compositeDisposable: CompositeDisposable
@@ -47,39 +50,46 @@ class SearchFragment : Fragment() {
 
         compositeDisposable = CompositeDisposable()
 
-        setSpinner()
+        setPrefSpinner()
+
     }
 
-    private fun setSpinner() {
+    private fun setPrefSpinner() {
         val disposable = resasViewModel.getPrefecture().subscribe({ result ->
             prefItems = result.result.map {
                 it.prefName
             }
+
             if (context == null) return@subscribe
             val arrayAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, prefItems)
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = arrayAdapter
+            pref_spinner.adapter = arrayAdapter
+
+            setPrefSpinnerListener()
+            setYearSpinner()
         }, {
             it.printStackTrace()
         })
 
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        compositeDisposable.add(disposable)
+    }
+
+    private fun setPrefSpinnerListener() {
+        pref_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                search(resasViewModel.prefectureMap.first {
+                selectedPrefectures = resasViewModel.prefectureMap.first {
                     it.prefName == prefItems[position]
-                })
+                }
+                search(selectedYear, selectedPrefectures)
             }
         }
-
-        compositeDisposable.add(disposable)
     }
 
-    fun search(searchItem: Prefectures) {
-
-        Observable.zip(getVisitor(searchItem.prefCode), getImage(searchItem.prefName),
+    private fun search(searchYear: String, searchItem: Prefectures) {
+        Observable.zip(getVisitor(searchYear, searchItem.prefCode), getImage(searchItem.prefName),
                 BiFunction<VisitorResult, FlickrData, Any> { visitorResult, imageData ->
 
                     GlideApp.with(this)
@@ -109,12 +119,37 @@ class SearchFragment : Fragment() {
         }.url_h!!
     }
 
-    private fun getVisitor(searchCode: Int): Observable<VisitorResult> {
-        return resasViewModel.getFromData(2016, searchCode)
+    private fun getVisitor(searchYear: String, searchCode: Int): Observable<VisitorResult> {
+        return resasViewModel.getFromData(searchYear.toInt(), searchCode)
     }
 
     private fun getImage(searchWord: String): Observable<FlickrData> {
         return flickrViewModel.getData(searchWord)
+    }
+
+    private fun setYearSpinner() {
+        if (context == null) return
+        yearList = listOf("2012", "2013", "2014", "2015", "2016")
+
+        val arrayAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, yearList)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        year_spinner.adapter = arrayAdapter
+
+        setYearSpinnerListener()
+    }
+
+    private fun setYearSpinnerListener() {
+        year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                selectedYear = yearList[position]
+                search(selectedYear, selectedPrefectures)
+            }
+
+        }
     }
 
     override fun onDestroy() {

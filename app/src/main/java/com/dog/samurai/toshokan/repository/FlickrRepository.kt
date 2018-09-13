@@ -17,7 +17,7 @@ interface FlickrApiService {
             @Query("extras") extras: String = "url_h",
             @Query("media") media: String = "photos",
             @Query("nojsoncallback") noJason: Int = 1,
-            @Query("content_type") contentType: Int = 1
+            @Query("content_type") contentType :Int = 1
     ): Observable<FlickrData>
 }
 
