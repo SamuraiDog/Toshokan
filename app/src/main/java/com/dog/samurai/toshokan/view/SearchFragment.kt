@@ -4,9 +4,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -24,6 +21,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.fragment_search.*
+import android.view.*
 
 class SearchFragment : Fragment() {
 
@@ -114,6 +112,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun imageSelect(imageData: FlickrData): String {
+        imageData.photos.photo.shuffled()
         return imageData.photos.photo.first {
             it.url_h != null && (it.height_h!! <= it.width_h!!)
         }.url_h!!

@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface FlickrApiService {
     @GET("rest/")
     fun getData(
-            @Query("api_key") apiKey: String = "TEST",
+            @Query("api_key") apiKey: String = "",
             @Query("method") method: String = "flickr.photos.search",
             @Query("format") format: String = "json",
             @Query("text") text: String,

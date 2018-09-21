@@ -11,7 +11,7 @@ class RepositoryProvider @Inject constructor(val context: Context) {
 
     fun resasRepository(): ResasRepository {
         if (resasRepository == null) {
-            val service = ApiFactory.createRetrofit<ResasApiService>("https://opendata.resas-portal.go.jp/api/v1/", "TEST")
+            val service = ApiFactory.createRetrofit<ResasApiService>("https://opendata.resas-portal.go.jp/api/v1/", "")
             resasRepository = ResasRepository(service)
         }
         return resasRepository as ResasRepository

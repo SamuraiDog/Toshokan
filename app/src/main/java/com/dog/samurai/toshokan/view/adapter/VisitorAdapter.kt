@@ -4,6 +4,7 @@ import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,7 @@ class VisitorAdapter : RecyclerView.Adapter<VisitorAdapter.ViewHolder>() {
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.view.apply {
 
-            country_name.text = fromData.result.changes[position].countryName
+            country_name.text = fromData.result.changes[viewHolder.adapterPosition].countryName
             val visitorDataAdapter = VisitorDataAdapter()
 
             visitor_recycler.apply {
@@ -47,7 +48,7 @@ class VisitorAdapter : RecyclerView.Adapter<VisitorAdapter.ViewHolder>() {
 
     private fun startAnimation(view: View, position: Int) {
         if (position > 2) {
-            val animation = AnimationUtils.loadAnimation(view.context, R.anim.slide_in_bottom)
+            val animation = AnimationUtils.loadAnimation(view.context, R.anim.fade_in)
             animation.interpolator = LinearOutSlowInInterpolator()
             animation.startTime = 500
             view.startAnimation(animation)
