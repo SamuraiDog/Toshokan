@@ -22,6 +22,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.view.*
+import com.dog.samurai.toshokan.model.Pyramid
+import com.dog.samurai.toshokan.view.helper.Fraction
 
 class SearchFragment : Fragment() {
 
@@ -29,7 +31,6 @@ class SearchFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
-    private lateinit var visitorAdapter: VisitorAdapter
     private lateinit var prefItems: List<String>
     private lateinit var selectedPrefectures: Prefectures
     private lateinit var yearList: List<String>
@@ -87,8 +88,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun search(searchYear: String, searchItem: Prefectures) {
-        Observable.zip(getVisitor(searchYear, searchItem.prefCode), getImage(searchItem.prefName),
-                BiFunction<VisitorResult, FlickrData, Any> { visitorResult, imageData ->
+        Observable.zip(getPyramid(searchYear, searchItem.prefCode), getImage(searchItem.prefName),
+                BiFunction<Pyramid, FlickrData, Boolean> { pyramid, imageData ->
 
                     GlideApp.with(this)
                             .load(imageSelect(imageData))
@@ -97,15 +98,33 @@ class SearchFragment : Fragment() {
                             .transition(DrawableTransitionOptions().crossFade())
                             .into(pref_image)
 
-                    visitorAdapter = VisitorAdapter()
+                    pyramid.result.yearLeft.apply {
+                        old_count.text = oldAgeCount.toString()
+                        middle_count.text = middleAgeCount.toString()
+                        newage_count.text = newAgeCount.toString()
 
-                    toshoList.apply {
-                        layoutManager = LinearLayoutManager(context)
-                        adapter = visitorAdapter
-                        setHasFixedSize(true)
+                        val total = oldAgeCount + middleAgeCount + newAgeCount
+                        total_count.text = total.toString()
+
+                        val support: Float = (middleAgeCount / oldAgeCount).toFloat()
+                        val decimal = String.format("%.1f", support)
+
+                        val result = String.format(resources.getString(R.string.result_text),
+                                year,
+                                oldAgeCount,
+                                oldAgePercent,
+                                middleAgeCount,
+                                middleAgePercent,
+                                newAgeCount,
+                                newAgePercent,
+                                decimal
+                        )
+
+                        result_text.text = result
+
                     }
 
-                    visitorAdapter.setItem(visitorResult)
+                    true
 
                 }).subscribe({}, { it.printStackTrace() })
 
@@ -122,13 +141,17 @@ class SearchFragment : Fragment() {
         return resasViewModel.getFromData(searchYear.toInt(), searchCode)
     }
 
+    private fun getPyramid(searchYear: String, searchCode: Int): Observable<Pyramid> {
+        return resasViewModel.getPyramid(searchYear.toInt(), searchCode)
+    }
+
     private fun getImage(searchWord: String): Observable<FlickrData> {
         return flickrViewModel.getData(searchWord)
     }
 
     private fun setYearSpinner() {
         if (context == null) return
-        yearList = listOf("2012", "2013", "2014", "2015", "2016")
+        yearList = listOf("1980", "1985", "1990", "1995", "2000")
 
         val arrayAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, yearList)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -147,7 +170,6 @@ class SearchFragment : Fragment() {
                 selectedYear = yearList[position]
                 search(selectedYear, selectedPrefectures)
             }
-
         }
     }
 

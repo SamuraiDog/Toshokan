@@ -4,7 +4,6 @@ import android.support.v4.view.ViewCompat
 import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,16 +26,16 @@ class VisitorAdapter : RecyclerView.Adapter<VisitorAdapter.ViewHolder>() {
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.view.apply {
 
-            country_name.text = fromData.result.changes[viewHolder.adapterPosition].countryName
-            val visitorDataAdapter = VisitorDataAdapter()
-
-            visitor_recycler.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = visitorDataAdapter
-                setHasFixedSize(true)
-            }
-
-            visitorDataAdapter.setItem(fromData.result.changes[position].data)
+//            title.text = fromData.result.changes[viewHolder.adapterPosition].countryName
+//            val visitorDataAdapter = VisitorDataAdapter()
+//
+//            visitor_recycler.apply {
+//                layoutManager = LinearLayoutManager(context)
+//                adapter = visitorDataAdapter
+//                setHasFixedSize(true)
+//            }
+//
+//            visitorDataAdapter.setItem(fromData.result.changes[position].data)
         }
 
         if (lastPosition < viewHolder.adapterPosition) {

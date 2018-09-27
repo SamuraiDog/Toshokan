@@ -1,5 +1,6 @@
 package com.dog.samurai.toshokan.repository
 
+import com.dog.samurai.toshokan.FLICKR_API_KEY
 import com.dog.samurai.toshokan.model.FlickrData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -10,14 +11,14 @@ import retrofit2.http.Query
 interface FlickrApiService {
     @GET("rest/")
     fun getData(
-            @Query("api_key") apiKey: String = "",
+            @Query("api_key") apiKey: String = FLICKR_API_KEY,
             @Query("method") method: String = "flickr.photos.search",
             @Query("format") format: String = "json",
             @Query("text") text: String,
             @Query("extras") extras: String = "url_h",
             @Query("media") media: String = "photos",
             @Query("nojsoncallback") noJason: Int = 1,
-            @Query("content_type") contentType :Int = 1
+            @Query("content_type") contentType: Int = 1
     ): Observable<FlickrData>
 }
 

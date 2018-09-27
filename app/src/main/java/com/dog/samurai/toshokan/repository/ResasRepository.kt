@@ -1,5 +1,6 @@
 package com.dog.samurai.toshokan.repository
 
+import com.dog.samurai.toshokan.model.Pyramid
 import com.dog.samurai.toshokan.model.Result
 import com.dog.samurai.toshokan.model.VisitorResult
 import io.reactivex.Observable
@@ -18,22 +19,36 @@ interface ResasApiService {
             @Query("prefCode") prefCode: Int,
             @Query("purpose") purpose: Int = 1
     ): Observable<VisitorResult>
+
+    @GET("population/composition/pyramid")
+    fun getPyramid(
+            @Query("prefCode") prefCode: Int,
+            @Query("yearLeft") yearLeft: Int,
+            @Query("yearRight") yearRight: Int,
+            @Query("cityCode") cityCode: String = "-"
+    ): Observable<Pyramid>
 }
 
 class ResasRepository(private val apiService: ResasApiService) {
     fun getPrefecture(): Observable<Result> {
         return apiService.getPrefecture()
                 .retry(1)
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getFromData(year: Int, prefCode: Int): Observable<VisitorResult> {
         return apiService.getFromData(year, prefCode)
                 .retry(1)
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
 
+    fun getPyramid(prefCode: Int, year: Int): Observable<Pyramid> {
+        return apiService.getPyramid(prefCode, year, year)
+                .retry(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 }
 

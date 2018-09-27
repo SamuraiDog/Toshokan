@@ -53,7 +53,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:background="#80FFFFFF"
-                android:padding="16dp"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/year_spinner"
                 app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:background="#80FFFFFF"
-                android:padding="16dp"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/pref_spinner"
                 app:layout_constraintRight_toRightOf="parent"
@@ -78,12 +78,137 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ScrollView
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/toshoList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/list_item" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/old_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/old_label"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/old_count"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
+
+                <TextView
+                    android:id="@+id/old_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="TextView"
+                    app:layout_constraintLeft_toRightOf="@+id/old_label"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
+
+                <TextView
+                    android:id="@+id/middle_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/middle_label"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/middle_count"
+                    app:layout_constraintTop_toBottomOf="@+id/old_label" />
+
+                <TextView
+                    android:id="@+id/middle_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="TextView"
+                    app:layout_constraintLeft_toRightOf="@+id/middle_label"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/old_count" />
+
+                <TextView
+                    android:id="@+id/newage_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/newage_label"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/newage_count"
+                    app:layout_constraintTop_toBottomOf="@+id/middle_label" />
+
+                <TextView
+                    android:id="@+id/newage_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="TextView"
+                    app:layout_constraintLeft_toRightOf="@+id/newage_label"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/middle_count" />
+
+                <TextView
+                    android:id="@+id/total_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_label"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/total_count"
+                    app:layout_constraintTop_toBottomOf="@+id/newage_label" />
+
+                <TextView
+                    android:id="@+id/total_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="TextView"
+                    app:layout_constraintLeft_toRightOf="@+id/total_label"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/newage_count" />
+
+                <TextView
+                    android:id="@+id/result_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/result_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/total_label" />
+
+                <TextView
+                    android:id="@+id/culc_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/culc_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/result_text" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+    </ScrollView>
+
 </android.support.design.widget.CoordinatorLayout>
