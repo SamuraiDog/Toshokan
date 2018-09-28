@@ -47,10 +47,10 @@ class VisitorAdapter : RecyclerView.Adapter<VisitorAdapter.ViewHolder>() {
 
     private fun startAnimation(view: View, position: Int) {
         if (position > 2) {
-            val animation = AnimationUtils.loadAnimation(view.context, R.anim.fade_in)
-            animation.interpolator = LinearOutSlowInInterpolator()
-            animation.startTime = 500
-            view.startAnimation(animation)
+//            val animation = AnimationUtils.loadAnimation(view.context, R.anim.fade_in)
+//            animation.interpolator = LinearOutSlowInInterpolator()
+//            animation.startTime = 500
+//            view.startAnimation(animation)
         }
     }
 

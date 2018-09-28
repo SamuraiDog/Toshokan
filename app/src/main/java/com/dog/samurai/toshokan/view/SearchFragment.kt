@@ -1,9 +1,12 @@
 package com.dog.samurai.toshokan.view
 
 import android.arch.lifecycle.ViewModelProviders
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Html
+import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -22,8 +25,12 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.RotateAnimation
 import com.dog.samurai.toshokan.model.Pyramid
 import com.dog.samurai.toshokan.view.helper.Fraction
+import com.dog.samurai.toshokan.view.helper.ResizeAnimation
 
 class SearchFragment : Fragment() {
 
@@ -34,7 +41,7 @@ class SearchFragment : Fragment() {
     private lateinit var prefItems: List<String>
     private lateinit var selectedPrefectures: Prefectures
     private lateinit var yearList: List<String>
-    private var selectedYear: String = "2012"
+    private var selectedYear: String = ""
     private lateinit var resasViewModel: ResasViewModel
     private lateinit var flickrViewModel: FlickrViewModel
     private lateinit var compositeDisposable: CompositeDisposable
@@ -50,7 +57,7 @@ class SearchFragment : Fragment() {
         compositeDisposable = CompositeDisposable()
 
         setPrefSpinner()
-
+        setChevron()
     }
 
     private fun setPrefSpinner() {
@@ -82,6 +89,7 @@ class SearchFragment : Fragment() {
                 selectedPrefectures = resasViewModel.prefectureMap.first {
                     it.prefName == prefItems[position]
                 }
+                if (selectedYear.isEmpty()) return
                 search(selectedYear, selectedPrefectures)
             }
         }
@@ -100,29 +108,82 @@ class SearchFragment : Fragment() {
 
                     pyramid.result.yearLeft.apply {
                         old_count.text = oldAgeCount.toString()
+                        old_count.append("人 ($oldAgePercent %)")
                         middle_count.text = middleAgeCount.toString()
+                        middle_count.append("人 ($middleAgePercent %)")
                         newage_count.text = newAgeCount.toString()
+                        newage_count.append("人 ($newAgePercent %)")
 
                         val total = oldAgeCount + middleAgeCount + newAgeCount
                         total_count.text = total.toString()
+                        total_count.append("人")
 
-                        val support: Float = (middleAgeCount / oldAgeCount).toFloat()
+                        val support: Float = (middleAgeCount.toFloat() / oldAgeCount.toFloat())
                         val decimal = String.format("%.1f", support)
 
-                        val result = String.format(resources.getString(R.string.result_text),
-                                year,
-                                oldAgeCount,
-                                oldAgePercent,
-                                middleAgeCount,
-                                middleAgePercent,
-                                newAgeCount,
-                                newAgePercent,
-                                decimal
-                        )
+                        val result = String.format(resources.getString(R.string.result_text), decimal)
 
-                        result_text.text = result
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            result_text.text = Html.fromHtml(result, Html.FROM_HTML_MODE_LEGACY)
+                        } else {
+                            @Suppress("DEPRECATION")
+                            result_text.text = Html.fromHtml(result)
+
+                        }
 
                     }
+
+                    var excludeYoung = 0
+                    var includeOld = 0
+
+                    pyramid.result.yearLeft.data.filter {
+                        it.ageClass == "15～19歳"
+                    }.map {
+                        excludeYoung = it.man
+                        excludeYoung += it.woman
+                    }
+
+                    val realAdultCount = pyramid.result.yearLeft.middleAgeCount - excludeYoung
+                    val realSupport = realAdultCount.toFloat() / pyramid.result.yearLeft.oldAgeCount.toFloat()
+
+
+                    pyramid.result.yearLeft.data.filter {
+                        it.ageClass == "65～69歳"
+                    }.map {
+                        includeOld = it.man
+                        includeOld += it.woman
+                    }
+
+                    val realWorkerCount = pyramid.result.yearLeft.middleAgeCount - excludeYoung + includeOld
+
+                    var elderly = 0
+                    pyramid.result.yearLeft.data.filter {
+                        it.ageClass == "70～74歳" || it.ageClass == "75～79歳"
+                                || it.ageClass == "80～84歳" || it.ageClass == "85～89歳"
+                                || it.ageClass == "90歳～"
+
+                    }.map {
+                        elderly += it.man
+                        elderly += it.woman
+                    }
+
+                    val supportElderly = realWorkerCount.toFloat() / elderly.toFloat()
+
+                    val culcText = String.format(resources.getString(R.string.culc_text),
+                            realAdultCount,
+                            String.format("%.1f", realSupport),
+                            String.format("%.1f", supportElderly)
+                    )
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        culc_text.text = Html.fromHtml(culcText, Html.FROM_HTML_MODE_LEGACY)
+                    } else {
+                        @Suppress("DEPRECATION")
+                        culc_text.text = Html.fromHtml(culcText)
+
+                    }
+
+                    title.append("${searchYear}年の${searchItem.prefName}")
 
                     true
 
@@ -151,7 +212,7 @@ class SearchFragment : Fragment() {
 
     private fun setYearSpinner() {
         if (context == null) return
-        yearList = listOf("1980", "1985", "1990", "1995", "2000")
+        yearList = listOf("1980", "1985", "1990", "1995", "2000", "2005", "2010", "2015", "2020", "2025", "2030", "2035", "2040")
 
         val arrayAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, yearList)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -173,9 +234,65 @@ class SearchFragment : Fragment() {
         }
     }
 
+    var isShow = false
+    var height = 0
+    private fun setChevron() {
+
+        culc_text.viewTreeObserver.addOnGlobalLayoutListener {
+            if (height == 0) {
+                height = culc_text.height
+                if (height != 0) culc_text.visibility = View.GONE
+            }
+        }
+
+        down_arrow.setOnClickListener {
+
+            if (isShow) {
+                val rotate = RotateAnimation(-180f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+                rotate.duration = 300
+                rotate.fillAfter = true
+                it.startAnimation(rotate)
+                val reduct = ResizeAnimation(culc_text, -height, height)
+                reduct.duration = 500
+                reduct.fillAfter=true
+                reduct.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationRepeat(p0: Animation?) {
+
+                    }
+
+                    override fun onAnimationEnd(p0: Animation?) {
+                        culc_text.visibility = View.GONE
+                        isShow = false
+                    }
+
+                    override fun onAnimationStart(p0: Animation?) {
+                    }
+
+                })
+                culc_text.startAnimation(reduct)
+
+            } else {
+                val rotate = RotateAnimation(0f, -180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+                rotate.duration = 300
+                rotate.fillAfter = true
+                it.startAnimation(rotate)
+                val expand = ResizeAnimation(culc_text, height, 0)
+                expand.duration = 500
+                expand.fillAfter=true
+                culc_text.startAnimation(expand)
+                culc_text.visibility = View.VISIBLE
+                isShow = true
+            }
+
+
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
         compositeDisposable.dispose()
     }
+
+
 }

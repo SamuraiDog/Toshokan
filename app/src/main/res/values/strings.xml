@@ -1,13 +1,12 @@
 <resources>
     <string name="app_name">Toshokan</string>
-    <string name="pref_image_desc">Pref Image</string>
+    <string name="image_desc">Image</string>
     <string name="old_label">老年人口（65歳以上）</string>
     <string name="middle_label">生産年齢人口（15歳〜64歳）</string>
     <string name="newage_label">年少人口（14歳以下）</string>
     <string name="total_label">総人口</string>
-    <string name="result_text">%1$s年の65歳以上の老年人口は「%2$s」人で、比率は「%3$s」％です。15歳〜64歳の生産年齢人口は「%4$s」人で、比率は「%5$s」％です。
-    14歳以下の年少人口は「%6$s」人で、比率は「%7$s」％です。これは老年人口1人あたりを生産年齢人口「%8$s」人で支えている事になります。</string>
-    <string name="culc_text">実際に15歳〜18歳で自主的に労働をしている割合は10％にも満たないと言われていますので、20歳〜64歳の生産年齢人口「%1$s」人で
-        老年人口を支えると1人あたり「%2$s」人で支えている事になります。また65歳〜69歳の男性の50％以上が労働をしていると言われていますので、
-    75歳以上の後期高齢者を20歳〜69歳で支えているとすると、1人あたり「%3$s」人で支えている事になります。</string>
+    <string name="result_text">結果：老年人口&lt;b>1人&lt;/b>あたりを生産年齢人口&lt;b>「%1$s」人&lt;/b>で支えている事になります。</string>
+    <string name="culc_text">実際に15歳〜18歳で自主的に労働をしている割合は10％にも満たないと言われていますので、20歳〜64歳の生産年齢人口&lt;b>「%1$s」人&lt;/b>で
+        老年人口を支えると&lt;b>1人&lt;/b>あたり&lt;b>「%2$s」人&lt;/b>で支えている事になります。&lt;br>&lt;br>また65歳〜69歳の男性の50％以上が労働をしていると言われていますので、
+    75歳以上の後期高齢者を20歳〜69歳で支えているとすると、&lt;b>1人&lt;/b>あたり&lt;b>「%3$s」人&lt;/b>で支えている事になります。</string>
 </resources>
