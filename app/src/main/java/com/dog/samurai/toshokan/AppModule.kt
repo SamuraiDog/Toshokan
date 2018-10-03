@@ -15,7 +15,7 @@ class AppModule(val app: Application) {
 
     @Provides
     @Singleton
-    fun provideRepositoryProvider(): RepositoryProvider = RepositoryProvider(app)
+    fun provideRepositoryProvider(): RepositoryProvider = RepositoryProvider()
 }
 
 

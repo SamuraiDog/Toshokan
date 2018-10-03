@@ -5,7 +5,6 @@ import com.dog.samurai.toshokan.RepositoryProvider
 import com.dog.samurai.toshokan.model.Prefectures
 import com.dog.samurai.toshokan.model.Pyramid
 import com.dog.samurai.toshokan.model.Result
-import com.dog.samurai.toshokan.model.VisitorResult
 import com.dog.samurai.toshokan.repository.ResasRepository
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -26,11 +25,7 @@ class ResasViewModel : ViewModel() {
         }
     }
 
-    fun getFromData(year: Int, prefCode: Int): Observable<VisitorResult> {
-        return resasRepository.getFromData(year, prefCode)
-    }
-
-    fun getPyramid(year: Int,prefCode: Int):Observable<Pyramid> {
+    fun getPyramid(year: Int, prefCode: Int): Observable<Pyramid> {
         return resasRepository.getPyramid(prefCode, year)
     }
 }

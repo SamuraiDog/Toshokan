@@ -5,8 +5,17 @@
     <string name="middle_label">生産年齢人口（15歳〜64歳）</string>
     <string name="newage_label">年少人口（14歳以下）</string>
     <string name="total_label">総人口</string>
-    <string name="result_text">結果：老年人口&lt;b>1人&lt;/b>あたりを生産年齢人口&lt;b>「%1$s」人&lt;/b>で支えている事になります。</string>
+    <string name="result_text">結果：&lt;br>老年人口&lt;b>1人&lt;/b>あたりを生産年齢人口&lt;b>「%1$s」人&lt;/b>で支えている事になります。</string>
     <string name="culc_text">実際に15歳〜18歳で自主的に労働をしている割合は10％にも満たないと言われていますので、20歳〜64歳の生産年齢人口&lt;b>「%1$s」人&lt;/b>で
         老年人口を支えると&lt;b>1人&lt;/b>あたり&lt;b>「%2$s」人&lt;/b>で支えている事になります。&lt;br>&lt;br>また65歳〜69歳の男性の50％以上が労働をしていると言われていますので、
     75歳以上の後期高齢者を20歳〜69歳で支えているとすると、&lt;b>1人&lt;/b>あたり&lt;b>「%3$s」人&lt;/b>で支えている事になります。</string>
+
+    <string name="api_description">ResasAPIを利用して都道府県一覧と、人口ピラミッドのデータを取得しています。また人口ピラミッドのデータを元に比率を計算しています。
+        2015年以降の数値は予測値となっています。\n画像はFlickrAPIを利用して都道府県の画像をランダムで取得しています。</string>
+    <string name="lib_description">開発にはkotlinを使用しています。CoordinatorLayoutを使用してヘッダーが画面外に吸い込まれるレイアウトを実装しています。
+        またConstraintLayoutを使用し文字を配置しています。それぞれの画面はFragmentです。\n\n外部ライブラリはAPIアクセスにRetrofit、Responseの解析にgson、画像取得にGlide、HTTP通信にはOkHttp、イベント処理にはRxを使用しています。</string>
+    <string name="open_source_label">オープンソースライセンス</string>
+    <string name="desc_label">説明</string>
+    <string name="use_label">使う</string>
+
 </resources>

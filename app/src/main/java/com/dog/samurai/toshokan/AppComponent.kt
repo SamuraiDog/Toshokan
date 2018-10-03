@@ -12,9 +12,6 @@ interface AppComponent {
 
     fun inject(app: App)
 
-    /**
-     * ViewModelsにRepository-providerをinjectする
-     */
     fun inject(resasViewModel: ResasViewModel)
 
     fun inject(flickrViewModel: FlickrViewModel)

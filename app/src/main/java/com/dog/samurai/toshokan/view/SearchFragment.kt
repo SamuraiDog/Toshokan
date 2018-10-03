@@ -4,9 +4,10 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.text.Html
-import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -16,21 +17,15 @@ import com.dog.samurai.toshokan.GlideApp
 import com.dog.samurai.toshokan.R
 import com.dog.samurai.toshokan.model.FlickrData
 import com.dog.samurai.toshokan.model.Prefectures
-import com.dog.samurai.toshokan.model.VisitorResult
-import com.dog.samurai.toshokan.view.adapter.VisitorAdapter
+import com.dog.samurai.toshokan.model.Pyramid
 import com.dog.samurai.toshokan.viewModel.FlickrViewModel
 import com.dog.samurai.toshokan.viewModel.ResasViewModel
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.fragment_search.*
-import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.view.animation.RotateAnimation
-import com.dog.samurai.toshokan.model.Pyramid
-import com.dog.samurai.toshokan.view.helper.Fraction
-import com.dog.samurai.toshokan.view.helper.ResizeAnimation
 
 class SearchFragment : Fragment() {
 
@@ -57,7 +52,15 @@ class SearchFragment : Fragment() {
         compositeDisposable = CompositeDisposable()
 
         setPrefSpinner()
-        setChevron()
+
+        MobileAds.initialize(context, "")
+        showAd()
+    }
+
+    private fun showAd() {
+        val adView = adView
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
     }
 
     private fun setPrefSpinner() {
@@ -183,6 +186,7 @@ class SearchFragment : Fragment() {
 
                     }
 
+                    title.text = ""
                     title.append("${searchYear}年の${searchItem.prefName}")
 
                     true
@@ -196,10 +200,6 @@ class SearchFragment : Fragment() {
         return imageData.photos.photo.first {
             it.url_h != null && (it.height_h!! <= it.width_h!!)
         }.url_h!!
-    }
-
-    private fun getVisitor(searchYear: String, searchCode: Int): Observable<VisitorResult> {
-        return resasViewModel.getFromData(searchYear.toInt(), searchCode)
     }
 
     private fun getPyramid(searchYear: String, searchCode: Int): Observable<Pyramid> {
@@ -231,60 +231,6 @@ class SearchFragment : Fragment() {
                 selectedYear = yearList[position]
                 search(selectedYear, selectedPrefectures)
             }
-        }
-    }
-
-    var isShow = false
-    var height = 0
-    private fun setChevron() {
-
-        culc_text.viewTreeObserver.addOnGlobalLayoutListener {
-            if (height == 0) {
-                height = culc_text.height
-                if (height != 0) culc_text.visibility = View.GONE
-            }
-        }
-
-        down_arrow.setOnClickListener {
-
-            if (isShow) {
-                val rotate = RotateAnimation(-180f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-                rotate.duration = 300
-                rotate.fillAfter = true
-                it.startAnimation(rotate)
-                val reduct = ResizeAnimation(culc_text, -height, height)
-                reduct.duration = 500
-                reduct.fillAfter=true
-                reduct.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationRepeat(p0: Animation?) {
-
-                    }
-
-                    override fun onAnimationEnd(p0: Animation?) {
-                        culc_text.visibility = View.GONE
-                        isShow = false
-                    }
-
-                    override fun onAnimationStart(p0: Animation?) {
-                    }
-
-                })
-                culc_text.startAnimation(reduct)
-
-            } else {
-                val rotate = RotateAnimation(0f, -180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-                rotate.duration = 300
-                rotate.fillAfter = true
-                it.startAnimation(rotate)
-                val expand = ResizeAnimation(culc_text, height, 0)
-                expand.duration = 500
-                expand.fillAfter=true
-                culc_text.startAnimation(expand)
-                culc_text.visibility = View.VISIBLE
-                isShow = true
-            }
-
-
         }
     }
 
