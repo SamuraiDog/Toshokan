@@ -1,7 +1,7 @@
-package com.dog.samurai.toshokan.repository
+package com.dog.samurai.pyramid.repository
 
-import com.dog.samurai.toshokan.FLICKR_API_KEY
-import com.dog.samurai.toshokan.model.FlickrData
+import com.dog.samurai.pyramid.FLICKR_API_KEY
+import com.dog.samurai.pyramid.model.FlickrData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

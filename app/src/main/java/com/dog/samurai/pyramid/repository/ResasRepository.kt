@@ -1,7 +1,7 @@
-package com.dog.samurai.toshokan.repository
+package com.dog.samurai.pyramid.repository
 
-import com.dog.samurai.toshokan.model.Pyramid
-import com.dog.samurai.toshokan.model.Result
+import com.dog.samurai.pyramid.model.Pyramid
+import com.dog.samurai.pyramid.model.Result
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

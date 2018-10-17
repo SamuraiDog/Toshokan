@@ -234,7 +234,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     ads:adSize="BANNER"
-                    ads:adUnitId=""
+                    ads:adUnitId="ca-app-pub-6484968451262299/8368063239"
                     app:layout_constraintBottom_toTopOf="@+id/culc_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

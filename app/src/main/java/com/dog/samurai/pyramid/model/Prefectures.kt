@@ -1,4 +1,4 @@
-package com.dog.samurai.toshokan.model
+package com.dog.samurai.pyramid.model
 
 data class Prefectures(
         val prefCode: Int,

@@ -1,9 +1,9 @@
-package com.dog.samurai.toshokan.viewModel
+package com.dog.samurai.pyramid.viewModel
 
 import android.arch.lifecycle.ViewModel
-import com.dog.samurai.toshokan.RepositoryProvider
-import com.dog.samurai.toshokan.model.FlickrData
-import com.dog.samurai.toshokan.repository.FlickrRepository
+import com.dog.samurai.pyramid.RepositoryProvider
+import com.dog.samurai.pyramid.model.FlickrData
+import com.dog.samurai.pyramid.repository.FlickrRepository
 import io.reactivex.Observable
 import javax.inject.Inject
 

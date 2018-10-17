@@ -1,11 +1,11 @@
-package com.dog.samurai.toshokan.viewModel
+package com.dog.samurai.pyramid.viewModel
 
 import android.arch.lifecycle.ViewModel
-import com.dog.samurai.toshokan.RepositoryProvider
-import com.dog.samurai.toshokan.model.Prefectures
-import com.dog.samurai.toshokan.model.Pyramid
-import com.dog.samurai.toshokan.model.Result
-import com.dog.samurai.toshokan.repository.ResasRepository
+import com.dog.samurai.pyramid.RepositoryProvider
+import com.dog.samurai.pyramid.model.Prefectures
+import com.dog.samurai.pyramid.model.Pyramid
+import com.dog.samurai.pyramid.model.Result
+import com.dog.samurai.pyramid.repository.ResasRepository
 import io.reactivex.Observable
 import javax.inject.Inject
 

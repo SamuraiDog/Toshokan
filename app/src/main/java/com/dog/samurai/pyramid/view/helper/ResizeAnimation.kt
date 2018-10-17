@@ -1,4 +1,4 @@
-package com.dog.samurai.toshokan.view.helper
+package com.dog.samurai.pyramid.view.helper
 
 import android.view.View
 import android.view.animation.Animation

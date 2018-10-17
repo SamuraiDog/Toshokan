@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Toshokan</string>
+    <string name="app_name">人口ピラミッド</string>
     <string name="image_desc">Image</string>
     <string name="old_label">老年人口（65歳以上）</string>
     <string name="middle_label">生産年齢人口（15歳〜64歳）</string>

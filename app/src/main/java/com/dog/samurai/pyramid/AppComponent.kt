@@ -1,8 +1,8 @@
-package com.dog.samurai.toshokan
+package com.dog.samurai.pyramid
 
 import android.app.Application
-import com.dog.samurai.toshokan.viewModel.FlickrViewModel
-import com.dog.samurai.toshokan.viewModel.ResasViewModel
+import com.dog.samurai.pyramid.viewModel.FlickrViewModel
+import com.dog.samurai.pyramid.viewModel.ResasViewModel
 import dagger.Component
 import javax.inject.Singleton
 

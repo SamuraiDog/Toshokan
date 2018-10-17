@@ -1,9 +1,9 @@
-package com.dog.samurai.toshokan
+package com.dog.samurai.pyramid
 
-import com.dog.samurai.toshokan.repository.FlickrApiService
-import com.dog.samurai.toshokan.repository.FlickrRepository
-import com.dog.samurai.toshokan.repository.ResasApiService
-import com.dog.samurai.toshokan.repository.ResasRepository
+import com.dog.samurai.pyramid.repository.FlickrApiService
+import com.dog.samurai.pyramid.repository.FlickrRepository
+import com.dog.samurai.pyramid.repository.ResasApiService
+import com.dog.samurai.pyramid.repository.ResasRepository
 import javax.inject.Inject
 
 

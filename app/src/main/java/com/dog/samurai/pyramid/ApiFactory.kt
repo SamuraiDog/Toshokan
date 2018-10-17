@@ -1,4 +1,4 @@
-package com.dog.samurai.toshokan
+package com.dog.samurai.pyramid
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

@@ -1,4 +1,4 @@
-package com.dog.samurai.toshokan.model
+package com.dog.samurai.pyramid.model
 
 import com.google.gson.annotations.SerializedName
 

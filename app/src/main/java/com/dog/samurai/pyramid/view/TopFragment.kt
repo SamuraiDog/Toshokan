@@ -1,4 +1,4 @@
-package com.dog.samurai.toshokan.view
+package com.dog.samurai.pyramid.view
 
 import android.content.Intent
 import android.net.Uri
@@ -10,10 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
-import com.dog.samurai.toshokan.FLICKR_URL
-import com.dog.samurai.toshokan.R
-import com.dog.samurai.toshokan.RESAS_URL
-import com.dog.samurai.toshokan.view.helper.ResizeAnimation
+import com.dog.samurai.pyramid.FLICKR_URL
+import com.dog.samurai.pyramid.R
+import com.dog.samurai.pyramid.RESAS_URL
+import com.dog.samurai.pyramid.view.helper.ResizeAnimation
 import kotlinx.android.synthetic.main.fragment_top.*
 import java.io.BufferedReader
 import java.io.InputStreamReader

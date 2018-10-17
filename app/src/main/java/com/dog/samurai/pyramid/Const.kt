@@ -1,4 +1,4 @@
-package com.dog.samurai.toshokan
+package com.dog.samurai.pyramid
 
 const val FLICKR_API_KEY = ""
 const val RESAS_API_KEY = ""

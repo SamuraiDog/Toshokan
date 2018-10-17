@@ -1,4 +1,4 @@
-package com.dog.samurai.toshokan.view
+package com.dog.samurai.pyramid.view
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
@@ -12,14 +12,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.dog.samurai.toshokan.App
-import com.dog.samurai.toshokan.GlideApp
-import com.dog.samurai.toshokan.R
-import com.dog.samurai.toshokan.model.FlickrData
-import com.dog.samurai.toshokan.model.Prefectures
-import com.dog.samurai.toshokan.model.Pyramid
-import com.dog.samurai.toshokan.viewModel.FlickrViewModel
-import com.dog.samurai.toshokan.viewModel.ResasViewModel
+import com.dog.samurai.pyramid.App
+import com.dog.samurai.pyramid.GlideApp
+import com.dog.samurai.pyramid.R
+import com.dog.samurai.pyramid.model.FlickrData
+import com.dog.samurai.pyramid.model.Prefectures
+import com.dog.samurai.pyramid.model.Pyramid
+import com.dog.samurai.pyramid.viewModel.FlickrViewModel
+import com.dog.samurai.pyramid.viewModel.ResasViewModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import io.reactivex.Observable
@@ -99,7 +99,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun search(searchYear: String, searchItem: Prefectures) {
-        Observable.zip(getPyramid(searchYear, searchItem.prefCode), getImage(searchItem.prefName),
+        val disposable = Observable.zip(getPyramid(searchYear, searchItem.prefCode), getImage(searchItem.prefName),
                 BiFunction<Pyramid, FlickrData, Boolean> { pyramid, imageData ->
 
                     GlideApp.with(this)
@@ -192,6 +192,8 @@ class SearchFragment : Fragment() {
                     true
 
                 }).subscribe({}, { it.printStackTrace() })
+
+        compositeDisposable.add(disposable)
 
     }
 

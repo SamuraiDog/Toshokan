@@ -1,9 +1,9 @@
-package com.dog.samurai.toshokan.view
+package com.dog.samurai.pyramid.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.FragmentTransaction
-import com.dog.samurai.toshokan.R
+import com.dog.samurai.pyramid.R
 
 class MainActivity : AppCompatActivity() {
 

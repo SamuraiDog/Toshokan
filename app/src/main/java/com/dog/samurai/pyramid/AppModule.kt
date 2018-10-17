@@ -1,4 +1,4 @@
-package com.dog.samurai.toshokan
+package com.dog.samurai.pyramid
 
 import android.app.Application
 import com.bumptech.glide.annotation.GlideModule
